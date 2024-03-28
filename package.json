@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "fix": "run-s 'fix:*'",
-    "test": "run-s 'test:*'"
+    "test": "run-s 'test:*'",
+    "test:spelling": "cspell '**'"
   },
   "engines": {
     "node": ">=20"
@@ -15,6 +16,8 @@
   },
   "packageManager": "yarn@3.8.1",
   "devDependencies": {
+    "@cspell/dict-vi-vn": "^3.0.0",
+    "cspell": "^8.6.1",
     "npm-run-all": "^4.1.5"
   }
 }
