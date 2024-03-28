@@ -484,6 +484,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@culur/prettier-config@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "@culur/prettier-config@npm:1.3.0"
+  checksum: 1677fd36952d72b90ef75f88cef2c3fc8cfe53f9b96667dab5c229373bd84a9b075735a13d5214070fef5f4bdcf48b64fa9ff7c0a2ef30eb2a1d73fe8d88d9ae
+  languageName: node
+  linkType: hard
+
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5
   resolution: "@nodelib/fs.scandir@npm:2.1.5"
@@ -508,6 +515,13 @@ __metadata:
     "@nodelib/fs.scandir": 2.1.5
     fastq: ^1.6.0
   checksum: 190c643f156d8f8f277bf2a6078af1ffde1fd43f498f187c2db24d35b4b4b5785c02c7dc52e356497b9a1b65b13edc996de08de0b961c32844364da02986dc53
+  languageName: node
+  linkType: hard
+
+"@solidity-parser/parser@npm:^0.17.0":
+  version: 0.17.0
+  resolution: "@solidity-parser/parser@npm:0.17.0"
+  checksum: 2f47732c9a4f6b264ce6c8a0544bd5a0805f824d3c40a8a253e59d5dbe9a98163f55c06460232f57a6b389bb5235c18d0563f94425202ec2f859d88f2378e0ac
   languageName: node
   linkType: hard
 
@@ -941,8 +955,11 @@ __metadata:
   resolution: "ehr-sc@workspace:."
   dependencies:
     "@cspell/dict-vi-vn": ^3.0.0
+    "@culur/prettier-config": ^1.3.0
     cspell: ^8.6.1
     npm-run-all: ^4.1.5
+    prettier: ^3.2.5
+    prettier-plugin-solidity: ^1.3.1
   languageName: unknown
   linkType: soft
 
@@ -1794,6 +1811,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prettier-plugin-solidity@npm:^1.3.1":
+  version: 1.3.1
+  resolution: "prettier-plugin-solidity@npm:1.3.1"
+  dependencies:
+    "@solidity-parser/parser": ^0.17.0
+    semver: ^7.5.4
+    solidity-comments-extractor: ^0.0.8
+  peerDependencies:
+    prettier: ">=2.3.0"
+  checksum: 286bf3b5899d7fad66e49c78ebac164bacfbf419f874a932ed99e491d97d77e91fa03ca068197939d3696ba7991db9e5258390dd42dee8d2184fa8c2e11921e4
+  languageName: node
+  linkType: hard
+
+"prettier@npm:^3.2.5":
+  version: 3.2.5
+  resolution: "prettier@npm:3.2.5"
+  bin:
+    prettier: bin/prettier.cjs
+  checksum: 2ee4e1417572372afb7a13bb446b34f20f1bf1747db77cf6ccaf57a9be005f2f15c40f903d41a6b79eec3f57fff14d32a20fb6dee1f126da48908926fe43c311
+  languageName: node
+  linkType: hard
+
 "queue-microtask@npm:^1.2.2":
   version: 1.2.3
   resolution: "queue-microtask@npm:1.2.3"
@@ -1919,7 +1958,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.6.0":
+"semver@npm:^7.5.4, semver@npm:^7.6.0":
   version: 7.6.0
   resolution: "semver@npm:7.6.0"
   dependencies:
@@ -1995,6 +2034,13 @@ __metadata:
   version: 3.0.7
   resolution: "signal-exit@npm:3.0.7"
   checksum: a2f098f247adc367dffc27845853e9959b9e88b01cb301658cfe4194352d8d2bb32e18467c786a7fe15f1d44b233ea35633d076d5e737870b7139949d1ab6318
+  languageName: node
+  linkType: hard
+
+"solidity-comments-extractor@npm:^0.0.8":
+  version: 0.0.8
+  resolution: "solidity-comments-extractor@npm:0.0.8"
+  checksum: ad025fc968e2d744b4270710c2f7f55b43d8046ab3f155fd880a7768d6fd163a93ea98f62be3b1115a29ba815bd8b5736bb5ffd1feff79083eca1bf273108d07
   languageName: node
   linkType: hard
 
