@@ -525,6 +525,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tsconfig/recommended@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "@tsconfig/recommended@npm:1.0.5"
+  checksum: d2a779698c7acf342bfe4594a969adf30ebac99da5c69ebb226355f8dd95a56d6c1772350a6d45d81bb7c509f103c27f7016a41df625b4cd3366a4844493fbf1
+  languageName: node
+  linkType: hard
+
 "ansi-regex@npm:^6.0.1":
   version: 6.0.1
   resolution: "ansi-regex@npm:6.0.1"
@@ -956,10 +963,12 @@ __metadata:
   dependencies:
     "@cspell/dict-vi-vn": ^3.0.0
     "@culur/prettier-config": ^1.3.0
+    "@tsconfig/recommended": ^1.0.5
     cspell: ^8.6.1
     npm-run-all: ^4.1.5
     prettier: ^3.2.5
     prettier-plugin-solidity: ^1.3.1
+    typescript: ^5.4.3
   languageName: unknown
   linkType: soft
 
@@ -2230,6 +2239,26 @@ __metadata:
   dependencies:
     is-typedarray: ^1.0.0
   checksum: 99c11aaa8f45189fcfba6b8a4825fd684a321caa9bd7a76a27cf0c7732c174d198b99f449c52c3818107430b5f41c0ccbbfb75cb2ee3ca4a9451710986d61a60
+  languageName: node
+  linkType: hard
+
+"typescript@npm:^5.4.3":
+  version: 5.4.3
+  resolution: "typescript@npm:5.4.3"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: d74d731527e35e64d8d2dcf2f897cf8cfbc3428be0ad7c48434218ba4ae41239f53be7c90714089db1068c05cae22436af2ecba71fd36ecc5e7a9118af060198
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@^5.4.3#~builtin<compat/typescript>":
+  version: 5.4.3
+  resolution: "typescript@patch:typescript@npm%3A5.4.3#~builtin<compat/typescript>::version=5.4.3&hash=5adc0c"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 523ec29bc308b4ca0cec9a139ac08a27939891d8ad620d249cf5e1a35454e37cd7bb52613a1884f1206aa11d2fb1c4c83fb9e939bde542aaa8527ba818cb8177
   languageName: node
   linkType: hard
 
