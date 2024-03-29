@@ -5,6 +5,7 @@
   "scripts": {
     "clean": "hardhat clean",
     "compile": "hardhat compile",
+    "------- 🚀 DEPLOY -------": "",
     "------- 🌕 FORMAT -------": "",
     "fix": "run-s 'fix:*'",
     "fix:prettier": "prettier '**' --write",
