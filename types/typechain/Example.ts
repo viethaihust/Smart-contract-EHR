@@ -8,6 +8,7 @@ import type {
   FunctionFragment,
   Result,
   Interface,
+  AddressLike,
   ContractRunner,
   ContractMethod,
   Listener,
@@ -20,24 +21,140 @@ import type {
   TypedContractMethod,
 } from "./common";
 
+export declare namespace Example {
+  export type PatientMedicalDataStruct = {
+    etherAddress: AddressLike;
+    name: string;
+    weight: BigNumberish;
+    height: BigNumberish;
+    bloodGroup: string;
+    bloodPressure: string;
+    covidVaccine: boolean;
+  };
+
+  export type PatientMedicalDataStructOutput = [
+    etherAddress: string,
+    name: string,
+    weight: bigint,
+    height: bigint,
+    bloodGroup: string,
+    bloodPressure: string,
+    covidVaccine: boolean
+  ] & {
+    etherAddress: string;
+    name: string;
+    weight: bigint;
+    height: bigint;
+    bloodGroup: string;
+    bloodPressure: string;
+    covidVaccine: boolean;
+  };
+}
+
 export interface ExampleInterface extends Interface {
   getFunction(
-    nameOrSignature: "increase" | "initialValue" | "number"
+    nameOrSignature:
+      | "RevokePermission"
+      | "addEditDoctorData"
+      | "addEditPatientMedicalData"
+      | "addVisitHistory"
+      | "doctorCount"
+      | "editPatientMedicalDataByDoctor"
+      | "getPatientMedicalList"
+      | "givePermission"
+      | "patientCount"
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: "increase", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "initialValue",
-    values: [BigNumberish]
+    functionFragment: "RevokePermission",
+    values: [AddressLike, AddressLike]
   ): string;
-  encodeFunctionData(functionFragment: "number", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "addEditDoctorData",
+    values: [AddressLike, string, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "addEditPatientMedicalData",
+    values: [
+      AddressLike,
+      string,
+      BigNumberish,
+      BigNumberish,
+      string,
+      string,
+      boolean
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "addVisitHistory",
+    values: [AddressLike, AddressLike, string, string, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "doctorCount",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "editPatientMedicalDataByDoctor",
+    values: [
+      AddressLike,
+      AddressLike,
+      string,
+      BigNumberish,
+      BigNumberish,
+      string,
+      string,
+      boolean
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getPatientMedicalList",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "givePermission",
+    values: [AddressLike, AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "patientCount",
+    values?: undefined
+  ): string;
 
-  decodeFunctionResult(functionFragment: "increase", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "initialValue",
+    functionFragment: "RevokePermission",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "number", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "addEditDoctorData",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "addEditPatientMedicalData",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "addVisitHistory",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "doctorCount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "editPatientMedicalDataByDoctor",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getPatientMedicalList",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "givePermission",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "patientCount",
+    data: BytesLike
+  ): Result;
 }
 
 export interface Example extends BaseContract {
@@ -83,24 +200,156 @@ export interface Example extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
-  increase: TypedContractMethod<[], [void], "nonpayable">;
+  RevokePermission: TypedContractMethod<
+    [patientAddress: AddressLike, doctorAddress: AddressLike],
+    [boolean],
+    "nonpayable"
+  >;
 
-  initialValue: TypedContractMethod<[_num: BigNumberish], [void], "nonpayable">;
+  addEditDoctorData: TypedContractMethod<
+    [etherAddress: AddressLike, name: string, specialty: string],
+    [void],
+    "nonpayable"
+  >;
 
-  number: TypedContractMethod<[], [bigint], "view">;
+  addEditPatientMedicalData: TypedContractMethod<
+    [
+      etherAddress: AddressLike,
+      name: string,
+      weight: BigNumberish,
+      height: BigNumberish,
+      bloodGroup: string,
+      bloodPressure: string,
+      covidVaccine: boolean
+    ],
+    [void],
+    "nonpayable"
+  >;
+
+  addVisitHistory: TypedContractMethod<
+    [
+      patientAddress: AddressLike,
+      doctorAddress: AddressLike,
+      date: string,
+      diagnosis: string,
+      prescription: string
+    ],
+    [void],
+    "nonpayable"
+  >;
+
+  doctorCount: TypedContractMethod<[], [bigint], "view">;
+
+  editPatientMedicalDataByDoctor: TypedContractMethod<
+    [
+      doctorAddress: AddressLike,
+      patientAddress: AddressLike,
+      name: string,
+      weight: BigNumberish,
+      height: BigNumberish,
+      bloodGroup: string,
+      bloodPressure: string,
+      covidVaccine: boolean
+    ],
+    [void],
+    "nonpayable"
+  >;
+
+  getPatientMedicalList: TypedContractMethod<
+    [id: AddressLike],
+    [Example.PatientMedicalDataStructOutput],
+    "view"
+  >;
+
+  givePermission: TypedContractMethod<
+    [patientAddress: AddressLike, doctorAddress: AddressLike],
+    [boolean],
+    "nonpayable"
+  >;
+
+  patientCount: TypedContractMethod<[], [bigint], "view">;
 
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
 
   getFunction(
-    nameOrSignature: "increase"
-  ): TypedContractMethod<[], [void], "nonpayable">;
+    nameOrSignature: "RevokePermission"
+  ): TypedContractMethod<
+    [patientAddress: AddressLike, doctorAddress: AddressLike],
+    [boolean],
+    "nonpayable"
+  >;
   getFunction(
-    nameOrSignature: "initialValue"
-  ): TypedContractMethod<[_num: BigNumberish], [void], "nonpayable">;
+    nameOrSignature: "addEditDoctorData"
+  ): TypedContractMethod<
+    [etherAddress: AddressLike, name: string, specialty: string],
+    [void],
+    "nonpayable"
+  >;
   getFunction(
-    nameOrSignature: "number"
+    nameOrSignature: "addEditPatientMedicalData"
+  ): TypedContractMethod<
+    [
+      etherAddress: AddressLike,
+      name: string,
+      weight: BigNumberish,
+      height: BigNumberish,
+      bloodGroup: string,
+      bloodPressure: string,
+      covidVaccine: boolean
+    ],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "addVisitHistory"
+  ): TypedContractMethod<
+    [
+      patientAddress: AddressLike,
+      doctorAddress: AddressLike,
+      date: string,
+      diagnosis: string,
+      prescription: string
+    ],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "doctorCount"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "editPatientMedicalDataByDoctor"
+  ): TypedContractMethod<
+    [
+      doctorAddress: AddressLike,
+      patientAddress: AddressLike,
+      name: string,
+      weight: BigNumberish,
+      height: BigNumberish,
+      bloodGroup: string,
+      bloodPressure: string,
+      covidVaccine: boolean
+    ],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "getPatientMedicalList"
+  ): TypedContractMethod<
+    [id: AddressLike],
+    [Example.PatientMedicalDataStructOutput],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "givePermission"
+  ): TypedContractMethod<
+    [patientAddress: AddressLike, doctorAddress: AddressLike],
+    [boolean],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "patientCount"
   ): TypedContractMethod<[], [bigint], "view">;
 
   filters: {};

@@ -4,7 +4,7 @@ async function main() {
   const contractAddress = await deployContractAndVerify({
     contractIdentifier: 'contracts/Example.sol:Example',
     constructorArguments: [],
-    signerAddress: '0xD4CD8155F5d38088d226DA93838722A10fB23009',
+    signerAddress: '0x6df6547A4Ca536618a68D746F520BD8aa421926e',
     onData(group, data) {
       process.stdout.write(`${group}: [${data}]\n`);
     },

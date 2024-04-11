@@ -6,7 +6,7 @@
     "clean": "hardhat clean",
     "compile": "hardhat compile",
     "------- 🚀 DEPLOY -------": "",
-    "deploy-example": "hardhat run scripts/deploy-example",
+    "deploy-example": "hardhat run scripts/deploy-example.ts",
     "------- 🌕 FORMAT -------": "",
     "fix": "run-s 'fix:*'",
     "fix:prettier": "prettier '**' --write",
