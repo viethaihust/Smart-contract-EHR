@@ -28,7 +28,7 @@ export declare namespace Example {
     weight: BigNumberish;
     height: BigNumberish;
     bloodGroup: string;
-    bloodPressure: string;
+    bloodPressure: BigNumberish;
     covidVaccine: boolean;
   };
 
@@ -38,7 +38,7 @@ export declare namespace Example {
     weight: bigint,
     height: bigint,
     bloodGroup: string,
-    bloodPressure: string,
+    bloodPressure: bigint,
     covidVaccine: boolean
   ] & {
     etherAddress: string;
@@ -46,29 +46,48 @@ export declare namespace Example {
     weight: bigint;
     height: bigint;
     bloodGroup: string;
-    bloodPressure: string;
+    bloodPressure: bigint;
     covidVaccine: boolean;
+  };
+
+  export type VisitHistoryDataStruct = {
+    patientAddress: AddressLike;
+    doctorAddress: AddressLike;
+    date: string;
+    diagnosis: string;
+    prescription: string;
+  };
+
+  export type VisitHistoryDataStructOutput = [
+    patientAddress: string,
+    doctorAddress: string,
+    date: string,
+    diagnosis: string,
+    prescription: string
+  ] & {
+    patientAddress: string;
+    doctorAddress: string;
+    date: string;
+    diagnosis: string;
+    prescription: string;
   };
 }
 
 export interface ExampleInterface extends Interface {
   getFunction(
     nameOrSignature:
-      | "RevokePermission"
       | "addEditDoctorData"
       | "addEditPatientMedicalData"
       | "addVisitHistory"
       | "doctorCount"
       | "editPatientMedicalDataByDoctor"
       | "getPatientMedicalList"
+      | "getVisitHistoryList"
       | "givePermission"
       | "patientCount"
+      | "revokePermission"
   ): FunctionFragment;
 
-  encodeFunctionData(
-    functionFragment: "RevokePermission",
-    values: [AddressLike, AddressLike]
-  ): string;
   encodeFunctionData(
     functionFragment: "addEditDoctorData",
     values: [AddressLike, string, string]
@@ -81,7 +100,7 @@ export interface ExampleInterface extends Interface {
       BigNumberish,
       BigNumberish,
       string,
-      string,
+      BigNumberish,
       boolean
     ]
   ): string;
@@ -102,12 +121,16 @@ export interface ExampleInterface extends Interface {
       BigNumberish,
       BigNumberish,
       string,
-      string,
+      BigNumberish,
       boolean
     ]
   ): string;
   encodeFunctionData(
     functionFragment: "getPatientMedicalList",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getVisitHistoryList",
     values: [AddressLike]
   ): string;
   encodeFunctionData(
@@ -118,11 +141,11 @@ export interface ExampleInterface extends Interface {
     functionFragment: "patientCount",
     values?: undefined
   ): string;
+  encodeFunctionData(
+    functionFragment: "revokePermission",
+    values: [AddressLike, AddressLike]
+  ): string;
 
-  decodeFunctionResult(
-    functionFragment: "RevokePermission",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "addEditDoctorData",
     data: BytesLike
@@ -148,11 +171,19 @@ export interface ExampleInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "getVisitHistoryList",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "givePermission",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "patientCount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "revokePermission",
     data: BytesLike
   ): Result;
 }
@@ -200,12 +231,6 @@ export interface Example extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
-  RevokePermission: TypedContractMethod<
-    [patientAddress: AddressLike, doctorAddress: AddressLike],
-    [boolean],
-    "nonpayable"
-  >;
-
   addEditDoctorData: TypedContractMethod<
     [etherAddress: AddressLike, name: string, specialty: string],
     [void],
@@ -219,7 +244,7 @@ export interface Example extends BaseContract {
       weight: BigNumberish,
       height: BigNumberish,
       bloodGroup: string,
-      bloodPressure: string,
+      bloodPressure: BigNumberish,
       covidVaccine: boolean
     ],
     [void],
@@ -248,7 +273,7 @@ export interface Example extends BaseContract {
       weight: BigNumberish,
       height: BigNumberish,
       bloodGroup: string,
-      bloodPressure: string,
+      bloodPressure: BigNumberish,
       covidVaccine: boolean
     ],
     [void],
@@ -256,8 +281,14 @@ export interface Example extends BaseContract {
   >;
 
   getPatientMedicalList: TypedContractMethod<
-    [id: AddressLike],
+    [etherAddress: AddressLike],
     [Example.PatientMedicalDataStructOutput],
+    "view"
+  >;
+
+  getVisitHistoryList: TypedContractMethod<
+    [patientAddress: AddressLike],
+    [Example.VisitHistoryDataStructOutput[]],
     "view"
   >;
 
@@ -269,17 +300,16 @@ export interface Example extends BaseContract {
 
   patientCount: TypedContractMethod<[], [bigint], "view">;
 
-  getFunction<T extends ContractMethod = ContractMethod>(
-    key: string | FunctionFragment
-  ): T;
-
-  getFunction(
-    nameOrSignature: "RevokePermission"
-  ): TypedContractMethod<
+  revokePermission: TypedContractMethod<
     [patientAddress: AddressLike, doctorAddress: AddressLike],
     [boolean],
     "nonpayable"
   >;
+
+  getFunction<T extends ContractMethod = ContractMethod>(
+    key: string | FunctionFragment
+  ): T;
+
   getFunction(
     nameOrSignature: "addEditDoctorData"
   ): TypedContractMethod<
@@ -296,7 +326,7 @@ export interface Example extends BaseContract {
       weight: BigNumberish,
       height: BigNumberish,
       bloodGroup: string,
-      bloodPressure: string,
+      bloodPressure: BigNumberish,
       covidVaccine: boolean
     ],
     [void],
@@ -328,7 +358,7 @@ export interface Example extends BaseContract {
       weight: BigNumberish,
       height: BigNumberish,
       bloodGroup: string,
-      bloodPressure: string,
+      bloodPressure: BigNumberish,
       covidVaccine: boolean
     ],
     [void],
@@ -337,8 +367,15 @@ export interface Example extends BaseContract {
   getFunction(
     nameOrSignature: "getPatientMedicalList"
   ): TypedContractMethod<
-    [id: AddressLike],
+    [etherAddress: AddressLike],
     [Example.PatientMedicalDataStructOutput],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "getVisitHistoryList"
+  ): TypedContractMethod<
+    [patientAddress: AddressLike],
+    [Example.VisitHistoryDataStructOutput[]],
     "view"
   >;
   getFunction(
@@ -351,6 +388,13 @@ export interface Example extends BaseContract {
   getFunction(
     nameOrSignature: "patientCount"
   ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "revokePermission"
+  ): TypedContractMethod<
+    [patientAddress: AddressLike, doctorAddress: AddressLike],
+    [boolean],
+    "nonpayable"
+  >;
 
   filters: {};
 }

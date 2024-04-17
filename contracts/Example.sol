@@ -10,7 +10,7 @@ contract Example {
     mapping(address => bool) isDoctor;
     mapping(address => DoctorData) DoctorDataList;
 
-    mapping(address => VisitHistoryData) VisitHistoryList;
+    mapping(address => VisitHistoryData[]) VisitHistoryList;
 
     mapping(address => mapping(address => bool)) isApproved;
 
@@ -102,7 +102,7 @@ contract Example {
             covidVaccine
         );
     }
-    
+
     //Add visit hisitory
     function addVisitHistory(
         address patientAddress,
@@ -112,13 +112,14 @@ contract Example {
         string memory prescription
     ) public {
         require(isDoctor[doctorAddress]);
-        VisitHistoryList[patientAddress] = VisitHistoryData(
-            patientAddress,
-            doctorAddress,
-            date,
-            diagnosis,
-            prescription
-        );
+        VisitHistoryData memory newVisit = VisitHistoryData({
+            patientAddress: patientAddress,
+            doctorAddress: doctorAddress,
+            date: date,
+            diagnosis: diagnosis,
+            prescription: prescription
+        });
+        VisitHistoryList[patientAddress].push(newVisit);
     }
 
     //Patient gives permission to the doctor to edit their data
@@ -148,8 +149,8 @@ contract Example {
 
     //Return visit history by patient's ethereum address
     function getVisitHistoryList(
-        address etherAddress
-    ) public view returns (VisitHistoryData memory) {
-        return VisitHistoryList[etherAddress];
+        address patientAddress
+    ) public view returns (VisitHistoryData[] memory) {
+        return VisitHistoryList[patientAddress];
     }
 }
