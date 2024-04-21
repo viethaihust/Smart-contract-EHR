@@ -22,50 +22,69 @@ import type {
 } from "./common";
 
 export declare namespace Example {
-  export type PatientMedicalDataStruct = {
+  export type DoctorStruct = {
     etherAddress: AddressLike;
+    name: string;
+    specialty: string;
+    isApproved: boolean;
+  };
+
+  export type DoctorStructOutput = [
+    etherAddress: string,
+    name: string,
+    specialty: string,
+    isApproved: boolean
+  ] & {
+    etherAddress: string;
+    name: string;
+    specialty: string;
+    isApproved: boolean;
+  };
+
+  export type PatientStruct = {
+    id: string;
     name: string;
     weight: BigNumberish;
     height: BigNumberish;
     bloodGroup: string;
     bloodPressure: BigNumberish;
-    covidVaccine: boolean;
+    covidVaccinated: boolean;
   };
 
-  export type PatientMedicalDataStructOutput = [
-    etherAddress: string,
+  export type PatientStructOutput = [
+    id: string,
     name: string,
     weight: bigint,
     height: bigint,
     bloodGroup: string,
     bloodPressure: bigint,
-    covidVaccine: boolean
+    covidVaccinated: boolean
   ] & {
-    etherAddress: string;
+    id: string;
     name: string;
     weight: bigint;
     height: bigint;
     bloodGroup: string;
     bloodPressure: bigint;
-    covidVaccine: boolean;
+    covidVaccinated: boolean;
   };
 
-  export type VisitHistoryDataStruct = {
-    patientAddress: AddressLike;
+  export type VisitHistoryStruct = {
+    patientId: string;
     doctorAddress: AddressLike;
     date: string;
     diagnosis: string;
     prescription: string;
   };
 
-  export type VisitHistoryDataStructOutput = [
-    patientAddress: string,
+  export type VisitHistoryStructOutput = [
+    patientId: string,
     doctorAddress: string,
     date: string,
     diagnosis: string,
     prescription: string
   ] & {
-    patientAddress: string;
+    patientId: string;
     doctorAddress: string;
     date: string;
     diagnosis: string;
@@ -77,15 +96,18 @@ export interface ExampleInterface extends Interface {
   getFunction(
     nameOrSignature:
       | "addEditDoctorData"
-      | "addEditPatientMedicalData"
-      | "addVisitHistory"
-      | "doctorCount"
-      | "editPatientMedicalDataByDoctor"
-      | "getPatientMedicalList"
-      | "getVisitHistoryList"
-      | "givePermission"
-      | "patientCount"
-      | "revokePermission"
+      | "addEditPatient"
+      | "addVisitHistoryByDoctor"
+      | "approveDoctor"
+      | "getDoctor"
+      | "getDoctors"
+      | "getDoctorsLength"
+      | "getPatient"
+      | "getPatients"
+      | "getPatientsLength"
+      | "getRole"
+      | "getVisitHistoriesByPatient"
+      | "register"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -93,9 +115,9 @@ export interface ExampleInterface extends Interface {
     values: [AddressLike, string, string]
   ): string;
   encodeFunctionData(
-    functionFragment: "addEditPatientMedicalData",
+    functionFragment: "addEditPatient",
     values: [
-      AddressLike,
+      string,
       string,
       BigNumberish,
       BigNumberish,
@@ -105,45 +127,42 @@ export interface ExampleInterface extends Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "addVisitHistory",
-    values: [AddressLike, AddressLike, string, string, string]
+    functionFragment: "addVisitHistoryByDoctor",
+    values: [string, string, string, string]
   ): string;
   encodeFunctionData(
-    functionFragment: "doctorCount",
-    values?: undefined
+    functionFragment: "approveDoctor",
+    values: [AddressLike, boolean]
   ): string;
   encodeFunctionData(
-    functionFragment: "editPatientMedicalDataByDoctor",
-    values: [
-      AddressLike,
-      AddressLike,
-      string,
-      BigNumberish,
-      BigNumberish,
-      string,
-      BigNumberish,
-      boolean
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getPatientMedicalList",
+    functionFragment: "getDoctor",
     values: [AddressLike]
   ): string;
   encodeFunctionData(
-    functionFragment: "getVisitHistoryList",
-    values: [AddressLike]
+    functionFragment: "getDoctors",
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "givePermission",
-    values: [AddressLike, AddressLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "patientCount",
+    functionFragment: "getDoctorsLength",
     values?: undefined
   ): string;
+  encodeFunctionData(functionFragment: "getPatient", values: [string]): string;
   encodeFunctionData(
-    functionFragment: "revokePermission",
-    values: [AddressLike, AddressLike]
+    functionFragment: "getPatients",
+    values: [BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getPatientsLength",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "getRole", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "getVisitHistoriesByPatient",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "register",
+    values: [string, string]
   ): string;
 
   decodeFunctionResult(
@@ -151,41 +170,38 @@ export interface ExampleInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "addEditPatientMedicalData",
+    functionFragment: "addEditPatient",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "addVisitHistory",
+    functionFragment: "addVisitHistoryByDoctor",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "doctorCount",
+    functionFragment: "approveDoctor",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "getDoctor", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "getDoctors", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "getDoctorsLength",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "getPatient", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "getPatients",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "editPatientMedicalDataByDoctor",
+    functionFragment: "getPatientsLength",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "getRole", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "getPatientMedicalList",
+    functionFragment: "getVisitHistoriesByPatient",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "getVisitHistoryList",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "givePermission",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "patientCount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "revokePermission",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "register", data: BytesLike): Result;
 }
 
 export interface Example extends BaseContract {
@@ -232,77 +248,96 @@ export interface Example extends BaseContract {
   ): Promise<this>;
 
   addEditDoctorData: TypedContractMethod<
-    [etherAddress: AddressLike, name: string, specialty: string],
+    [doctorAddr: AddressLike, name: string, specialty: string],
     [void],
     "nonpayable"
   >;
 
-  addEditPatientMedicalData: TypedContractMethod<
+  addEditPatient: TypedContractMethod<
     [
-      etherAddress: AddressLike,
+      id: string,
       name: string,
       weight: BigNumberish,
       height: BigNumberish,
       bloodGroup: string,
       bloodPressure: BigNumberish,
-      covidVaccine: boolean
+      covidVaccinated: boolean
     ],
     [void],
     "nonpayable"
   >;
 
-  addVisitHistory: TypedContractMethod<
-    [
-      patientAddress: AddressLike,
-      doctorAddress: AddressLike,
-      date: string,
-      diagnosis: string,
-      prescription: string
-    ],
+  addVisitHistoryByDoctor: TypedContractMethod<
+    [patientId: string, date: string, diagnosis: string, prescription: string],
     [void],
     "nonpayable"
   >;
 
-  doctorCount: TypedContractMethod<[], [bigint], "view">;
-
-  editPatientMedicalDataByDoctor: TypedContractMethod<
-    [
-      doctorAddress: AddressLike,
-      patientAddress: AddressLike,
-      name: string,
-      weight: BigNumberish,
-      height: BigNumberish,
-      bloodGroup: string,
-      bloodPressure: BigNumberish,
-      covidVaccine: boolean
-    ],
+  approveDoctor: TypedContractMethod<
+    [doctorAddr: AddressLike, value: boolean],
     [void],
     "nonpayable"
   >;
 
-  getPatientMedicalList: TypedContractMethod<
-    [etherAddress: AddressLike],
-    [Example.PatientMedicalDataStructOutput],
+  getDoctor: TypedContractMethod<
+    [doctor: AddressLike],
+    [Example.DoctorStructOutput],
     "view"
   >;
 
-  getVisitHistoryList: TypedContractMethod<
-    [patientAddress: AddressLike],
-    [Example.VisitHistoryDataStructOutput[]],
+  getDoctors: TypedContractMethod<
+    [from: BigNumberish, to: BigNumberish],
+    [[bigint, string[], string[], string[], boolean[]]],
     "view"
   >;
 
-  givePermission: TypedContractMethod<
-    [patientAddress: AddressLike, doctorAddress: AddressLike],
-    [boolean],
-    "nonpayable"
+  getDoctorsLength: TypedContractMethod<[], [bigint], "view">;
+
+  getPatient: TypedContractMethod<
+    [id: string],
+    [Example.PatientStructOutput],
+    "view"
   >;
 
-  patientCount: TypedContractMethod<[], [bigint], "view">;
+  getPatients: TypedContractMethod<
+    [from: BigNumberish, to: BigNumberish],
+    [
+      [
+        bigint,
+        string[],
+        string[],
+        bigint[],
+        bigint[],
+        string[],
+        bigint[],
+        boolean[]
+      ] & {
+        count: bigint;
+        id: string[];
+        name: string[];
+        weight: bigint[];
+        height: bigint[];
+        bloodGroup: string[];
+        bloodPressure: bigint[];
+        covidVaccinated: boolean[];
+      }
+    ],
+    "view"
+  >;
 
-  revokePermission: TypedContractMethod<
-    [patientAddress: AddressLike, doctorAddress: AddressLike],
-    [boolean],
+  getPatientsLength: TypedContractMethod<[], [bigint], "view">;
+
+  getRole: TypedContractMethod<[], [string], "view">;
+
+  getVisitHistoriesByPatient: TypedContractMethod<
+    [id: string],
+    [Example.VisitHistoryStructOutput[]],
+    "view"
+  >;
+
+  register: TypedContractMethod<
+    [name: string, specialty: string],
+    [void],
     "nonpayable"
   >;
 
@@ -313,86 +348,104 @@ export interface Example extends BaseContract {
   getFunction(
     nameOrSignature: "addEditDoctorData"
   ): TypedContractMethod<
-    [etherAddress: AddressLike, name: string, specialty: string],
+    [doctorAddr: AddressLike, name: string, specialty: string],
     [void],
     "nonpayable"
   >;
   getFunction(
-    nameOrSignature: "addEditPatientMedicalData"
+    nameOrSignature: "addEditPatient"
   ): TypedContractMethod<
     [
-      etherAddress: AddressLike,
+      id: string,
       name: string,
       weight: BigNumberish,
       height: BigNumberish,
       bloodGroup: string,
       bloodPressure: BigNumberish,
-      covidVaccine: boolean
+      covidVaccinated: boolean
     ],
     [void],
     "nonpayable"
   >;
   getFunction(
-    nameOrSignature: "addVisitHistory"
+    nameOrSignature: "addVisitHistoryByDoctor"
   ): TypedContractMethod<
-    [
-      patientAddress: AddressLike,
-      doctorAddress: AddressLike,
-      date: string,
-      diagnosis: string,
-      prescription: string
-    ],
+    [patientId: string, date: string, diagnosis: string, prescription: string],
     [void],
     "nonpayable"
   >;
   getFunction(
-    nameOrSignature: "doctorCount"
-  ): TypedContractMethod<[], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "editPatientMedicalDataByDoctor"
+    nameOrSignature: "approveDoctor"
   ): TypedContractMethod<
-    [
-      doctorAddress: AddressLike,
-      patientAddress: AddressLike,
-      name: string,
-      weight: BigNumberish,
-      height: BigNumberish,
-      bloodGroup: string,
-      bloodPressure: BigNumberish,
-      covidVaccine: boolean
-    ],
+    [doctorAddr: AddressLike, value: boolean],
     [void],
     "nonpayable"
   >;
   getFunction(
-    nameOrSignature: "getPatientMedicalList"
+    nameOrSignature: "getDoctor"
   ): TypedContractMethod<
-    [etherAddress: AddressLike],
-    [Example.PatientMedicalDataStructOutput],
+    [doctor: AddressLike],
+    [Example.DoctorStructOutput],
     "view"
   >;
   getFunction(
-    nameOrSignature: "getVisitHistoryList"
+    nameOrSignature: "getDoctors"
   ): TypedContractMethod<
-    [patientAddress: AddressLike],
-    [Example.VisitHistoryDataStructOutput[]],
+    [from: BigNumberish, to: BigNumberish],
+    [[bigint, string[], string[], string[], boolean[]]],
     "view"
   >;
   getFunction(
-    nameOrSignature: "givePermission"
-  ): TypedContractMethod<
-    [patientAddress: AddressLike, doctorAddress: AddressLike],
-    [boolean],
-    "nonpayable"
-  >;
-  getFunction(
-    nameOrSignature: "patientCount"
+    nameOrSignature: "getDoctorsLength"
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
-    nameOrSignature: "revokePermission"
+    nameOrSignature: "getPatient"
+  ): TypedContractMethod<[id: string], [Example.PatientStructOutput], "view">;
+  getFunction(
+    nameOrSignature: "getPatients"
   ): TypedContractMethod<
-    [patientAddress: AddressLike, doctorAddress: AddressLike],
-    [boolean],
+    [from: BigNumberish, to: BigNumberish],
+    [
+      [
+        bigint,
+        string[],
+        string[],
+        bigint[],
+        bigint[],
+        string[],
+        bigint[],
+        boolean[]
+      ] & {
+        count: bigint;
+        id: string[];
+        name: string[];
+        weight: bigint[];
+        height: bigint[];
+        bloodGroup: string[];
+        bloodPressure: bigint[];
+        covidVaccinated: boolean[];
+      }
+    ],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "getPatientsLength"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "getRole"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "getVisitHistoriesByPatient"
+  ): TypedContractMethod<
+    [id: string],
+    [Example.VisitHistoryStructOutput[]],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "register"
+  ): TypedContractMethod<
+    [name: string, specialty: string],
+    [void],
     "nonpayable"
   >;
 
